@@ -1,7 +1,7 @@
 import { test, expect, Page } from '@playwright/test';
 
 
-//паттены: "Value Object" и "Application Action"
+//паттены: "Value Object" и "Steps"
 
 const users = [{ //Value Object
   firstName: 'FirstName',
@@ -95,7 +95,7 @@ const formDialogComponent = (page: Page) => {
   return actions;
 };
 
-const fillUserAction = async (user: any, page: Page) => { //Application Action add user
+const fillUserStep = async (user: any, page: Page) => { //Application Action add user
   const webTables = webTablesPage(page);  
   const formDialog = formDialogComponent(page);
   await webTables.clickAddButton();
@@ -117,7 +117,7 @@ test('Add user', async ({ page }) => {
   const webTables = webTablesPage(page);
 
   await webTables.goto();
-  await fillUserAction(users[0], page);
+  await fillUserStep(users[0], page);
   await expectUserAction(users[1], page);
 });
 
@@ -133,9 +133,9 @@ test('Add user with different data', async ({ page }) => {
   const webTables = webTablesPage(page);
   
   await webTables.goto();
-  await fillUserAction(users[0], page);
+  await fillUserStep(users[0], page);
   await expectUserAction(users[0], page);
-  await fillUserAction(users[1], page);
+  await fillUserStep(users[1], page);
   await expectUserAction(users[1], page);
 });
 

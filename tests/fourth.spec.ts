@@ -95,7 +95,7 @@ const formDialogComponent = (page: Page) => {
   return actions;
 };
 
-const fillUserAction = async (user: any, page: Page) => { //Application Action add user
+const fillUserStep = async (user: any, page: Page) => { //Application Action add user
   const webTables = webTablesPage(page);  
   const formDialog = formDialogComponent(page);
   await webTables.clickAddButton();
@@ -108,7 +108,7 @@ const fillUserAction = async (user: any, page: Page) => { //Application Action a
   await formDialog.clickSubmitButton();
 };
 
-const expectUserAction = async (user: any, page: Page) => { //Application Action expect user 
+const expectUserStep = async (user: any, page: Page) => { //Application Action expect user 
   const webTables = webTablesPage(page);  
   await webTables.expectRowText(user.firstName, `${user.firstName}${user.lastName}${user.age}${user.email}${user.salary}${user.department}`);
 };
@@ -117,8 +117,8 @@ for (const user of users) { //Data Driven Tests
   test(`Add user ${user.firstName}`, async ({ page }) => {
     const webTables = webTablesPage(page);
     await webTables.goto();
-    await fillUserAction(user, page);
-    await expectUserAction(user, page);
+    await fillUserStep(user, page);
+    await expectUserStep(user, page);
   });
 }
 
@@ -126,8 +126,8 @@ test('Add user', async ({ page }) => {
   const webTables = webTablesPage(page);
 
   await webTables.goto();
-  await fillUserAction(users[0], page);
-  await expectUserAction(users[1], page);
+  await fillUserStep(users[0], page);
+  await expectUserStep(users[1], page);
 });
 
 test('Delete user', async ({ page }) => {
@@ -142,10 +142,10 @@ test('Add user with different data', async ({ page }) => {
   const webTables = webTablesPage(page);
   
   await webTables.goto();
-  await fillUserAction(users[0], page);
-  await expectUserAction(users[0], page);
-  await fillUserAction(users[1], page);
-  await expectUserAction(users[1], page);
+  await fillUserStep(users[0], page);
+  await expectUserStep(users[0], page);
+  await fillUserStep(users[1], page);
+  await expectUserStep(users[1], page);
 });
 
 
